@@ -8,30 +8,31 @@ import {
   Body,
   Query,
 } from '@nestjs/common';
-import { CatsService } from '../services/cats.service';
-import { CreateCatDto, ListAllEntities, UpdateCatDto } from '../dtos/cat.dto';
+import { CatsService } from './cats.service';
+import { CreateCatDto, ListAllEntities, UpdateCatDto } from './cat.dto';
+import { Cat } from './cat.interface';
 
 /**
  * @description This is a CRUD controller for cats
  */
 @Controller('cats')
 export class CatsController {
-  constructor(private readonly service: CatsService) {}
+  constructor(private readonly catsService: CatsService) {}
 
   @Post()
-  create(@Body() createCatDto: CreateCatDto): string {
+  create(@Body() createCatDto: CreateCatDto) {
     console.log('create', createCatDto);
-    return 'This action adds a new cat';
+    this.catsService.create(createCatDto);
   }
 
   @Get()
-  async findAll(@Query() query: ListAllEntities) {
-    return `This action returns all cats (limit: ${query.limit} items)`;
+  async findAll(@Query() query: ListAllEntities): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
 
   @Get('breeds')
   getBreeds(): Array<string> {
-    return this.service.getBreeds();
+    return [''];
   }
 
   @Get(':id')
