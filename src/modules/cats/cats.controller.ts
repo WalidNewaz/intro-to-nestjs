@@ -11,15 +11,22 @@ import {
   ParseIntPipe,
   ParseUUIDPipe,
   UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ForbiddenException } from '../../shared/exceptions/forbidden.exception';
 import { HttpExceptionFilter } from '../../shared/filters/http-exception.filter';
 import { CatsService } from './cats.service';
-import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
+import {
+  CreateCatDto,
+  ListAllEntities,
+  UpdateCatDto,
+  FindOneParams,
+} from './dto/cat.dto';
 import { Cat } from './interfaces/cat.interface';
 import { LoggingService } from '../logging/logging.service';
 import { createCatSchema } from './schemas/cat.schema';
 import { JoiValidationPipe } from '../../shared/pipes/joi-validation.pipe';
+// import { ValidationPipe } from '../../shared/pipes/validation.pipe';
 
 /**
  * @description This is a CRUD controller for cats
@@ -33,7 +40,6 @@ export class CatsController {
   ) {}
 
   @Post()
-  @UsePipes(new JoiValidationPipe(createCatSchema))
   create(@Body() createCatDto: CreateCatDto) {
     this.LOG.log('create', createCatDto);
     this.catsService.create(createCatDto);
@@ -54,8 +60,9 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string): string {
-    return `This action returns a #${id} cat`;
+  findOne(@Param() params: FindOneParams): string {
+    this.LOG.log('findOne', params.id);
+    return `This action returns a #${params} cat`;
   }
 
   @Put(':id')
