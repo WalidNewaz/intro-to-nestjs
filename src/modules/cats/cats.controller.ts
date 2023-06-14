@@ -7,8 +7,10 @@ import {
   Param,
   Body,
   Query,
+  UseFilters,
 } from '@nestjs/common';
 import { ForbiddenException } from '../../shared/exceptions/forbidden.exception';
+import { HttpExceptionFilter } from '../../shared/filters/http-exception.filter';
 import { CatsService } from './cats.service';
 import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
 import { Cat } from './interfaces/cat.interface';
@@ -18,6 +20,7 @@ import { LoggingService } from '../logging/logging.service';
  * @description This is a CRUD controller for cats
  */
 @Controller('cats')
+@UseFilters(HttpExceptionFilter)
 export class CatsController {
   constructor(
     private readonly catsService: CatsService,
