@@ -8,6 +8,7 @@ import {
   Body,
   Query,
 } from '@nestjs/common';
+import { ForbiddenException } from '../../shared/exceptions/forbidden.exception';
 import { CatsService } from './cats.service';
 import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
 import { Cat } from './interfaces/cat.interface';
@@ -31,7 +32,11 @@ export class CatsController {
 
   @Get()
   async findAll(@Query() query: ListAllEntities): Promise<Cat[]> {
-    return this.catsService.findAll();
+    const { limit } = query;
+    if (limit > 0) {
+      return this.catsService.findAll();
+    }
+    throw new ForbiddenException();
   }
 
   @Get('breeds')
