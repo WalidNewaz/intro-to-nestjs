@@ -1,4 +1,4 @@
-import { Controller, Get, Header, Redirect, Post, Param } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller({ host: 'localhost', path: 'admin' })
 export class AdminController {

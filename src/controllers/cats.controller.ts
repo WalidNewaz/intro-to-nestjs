@@ -11,6 +11,9 @@ import {
 import { CatsService } from '../services/cats.service';
 import { CreateCatDto, ListAllEntities, UpdateCatDto } from '../dtos/cat.dto';
 
+/**
+ * @description This is a CRUD controller for cats
+ */
 @Controller('cats')
 export class CatsController {
   constructor(private readonly service: CatsService) {}
