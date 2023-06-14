@@ -9,8 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
-import { CreateCatDto, ListAllEntities, UpdateCatDto } from './cat.dto';
-import { Cat } from './cat.interface';
+import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
+import { Cat } from './interfaces/cat.interface';
 
 /**
  * @description This is a CRUD controller for cats

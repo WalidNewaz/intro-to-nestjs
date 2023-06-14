@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Cat } from './cat.interface';
+import { Cat } from './interfaces/cat.interface';
 
 /**
  * @description This is a service `provider`. This has a lifetime scope synchronized
