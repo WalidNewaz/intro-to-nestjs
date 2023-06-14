@@ -8,7 +8,7 @@ import {
   Body,
   Query,
   UseFilters,
-  ParseIntPipe,
+  // ParseIntPipe,
   ParseUUIDPipe,
   UsePipes,
   ValidationPipe,
@@ -27,6 +27,7 @@ import { LoggingService } from '../logging/logging.service';
 import { createCatSchema } from './schemas/cat.schema';
 import { JoiValidationPipe } from '../../shared/pipes/joi-validation.pipe';
 // import { ValidationPipe } from '../../shared/pipes/validation.pipe';
+import { ParseIntPipe } from '../../shared/pipes/parse-int.pipe';
 
 /**
  * @description This is a CRUD controller for cats
@@ -60,9 +61,9 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param() params: FindOneParams): string {
-    this.LOG.log('findOne', params.id);
-    return `This action returns a #${params} cat`;
+  findOne(@Param('id') id: number): string {
+    this.LOG.log('findOne', id);
+    return `This action returns a #${id} cat`;
   }
 
   @Put(':id')
