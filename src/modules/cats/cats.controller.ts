@@ -11,17 +11,21 @@ import {
 import { CatsService } from './cats.service';
 import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
 import { Cat } from './interfaces/cat.interface';
+import { LoggingService } from '../logging/logging.service';
 
 /**
  * @description This is a CRUD controller for cats
  */
 @Controller('cats')
 export class CatsController {
-  constructor(private readonly catsService: CatsService) {}
+  constructor(
+    private readonly catsService: CatsService,
+    private readonly LOG: LoggingService,
+  ) {}
 
   @Post()
   create(@Body() createCatDto: CreateCatDto) {
-    console.log('create', createCatDto);
+    this.LOG.log('create', createCatDto);
     this.catsService.create(createCatDto);
   }
 
@@ -42,7 +46,7 @@ export class CatsController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto): string {
-    console.log('update', updateCatDto);
+    this.LOG.log('update', updateCatDto);
     return `This action updates a #${id} cat`;
   }
 
