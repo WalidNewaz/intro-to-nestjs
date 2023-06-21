@@ -10,10 +10,10 @@ import { LoggingService } from '../logging/logging.service';
 export class CatsService {
   private readonly cats: Cat[] = [];
 
-  constructor(private readonly LOG: LoggingService) {}
+  // constructor(private readonly LOG: LoggingService) {}
 
   create(cat: Cat) {
-    this.LOG.log('CatsService.create', cat);
+    // this.LOG.log('CatsService.create', cat);
     this.cats.push(cat);
   }
 

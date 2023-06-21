@@ -57,7 +57,7 @@ export class CatsController {
 
   @Get('breeds')
   getBreeds(): Array<string> {
-    return [''];
+    return ['unknown'];
   }
 
   @Get(':id')
@@ -78,5 +78,27 @@ export class CatsController {
   @Delete(':id')
   remove(@Param('id') id: string): string {
     return `This action removes a #${id} cat`;
+  }
+
+  /** Lifecycle event handlers **/
+
+  onModuleInit() {
+    this.LOG.log('CatController: onModuleInit');
+  }
+
+  onApplicationBootstrap() {
+    this.LOG.log('CatController: onApplicationBootstrap');
+  }
+
+  onModuleDestroy() {
+    this.LOG.log('CatController: onModuleDestroy');
+  }
+
+  beforeApplicationShutdown(signal: string) {
+    this.LOG.log('CatController: beforeApplicationShutdown', signal);
+  }
+
+  onApplicationShutdown(signal: string) {
+    this.LOG.log('CatController: onApplicationShutdown', signal);
   }
 }

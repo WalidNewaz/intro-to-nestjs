@@ -8,4 +8,24 @@ import { CatsService } from './cats.service';
   providers: [CatsService],
   exports: [CatsService],
 })
-export class CatsModule {}
+export class CatsModule {
+  onModuleInit() {
+    console.log(`CatsModule has been initialized.`);
+  }
+
+  onApplicationBootstrap() {
+    console.log(`CatsModule has been bootstrapped.`);
+  }
+
+  onModuleDestroy() {
+    console.log(`CatsModule has been destroyed.`);
+  }
+
+  beforeApplicationShutdown(signal?: string) {
+    console.log(`CatsModule: beforeApplicationShutdown`);
+  }
+
+  onApplicationShutdown(signal?: string) {
+    console.log(`CatsModule has been shutdown.`);
+  }
+}
