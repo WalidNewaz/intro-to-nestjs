@@ -24,6 +24,7 @@ describe('CatsService', () => {
   });
 
   it('should be defined', () => {
+    console.log(process.env.NODE_ENV);
     expect(service).toBeDefined();
   });
 });

@@ -9,9 +9,15 @@ import { LoggerMiddleware } from './shared/middleware/logger.middleware';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { LoggingInterceptor } from './shared/interceptors/logging.interceptor';
 import { TransformInterceptor } from './shared/interceptors/transform.interceptor';
+import { ConfigModule } from './modules/config/config.module';
 
 @Module({
-  imports: [CatsModule, AdminModule, LoggingModule],
+  imports: [
+    ConfigModule.register({ folder: './config' }),
+    CatsModule,
+    AdminModule,
+    LoggingModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
