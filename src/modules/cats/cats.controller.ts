@@ -8,24 +8,14 @@ import {
   Body,
   Query,
   UseFilters,
-  // ParseIntPipe,
-  ParseUUIDPipe,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ForbiddenException } from '../../shared/exceptions/forbidden.exception';
 import { HttpExceptionFilter } from '../../shared/filters/http-exception.filter';
 import { CatsService } from './cats.service';
-import {
-  CreateCatDto,
-  ListAllEntities,
-  UpdateCatDto,
-  FindOneParams,
-} from './dto/cat.dto';
+import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
 import { Cat } from './interfaces/cat.interface';
 import { LoggingService } from '../logging/logging.service';
-import { createCatSchema } from './schemas/cat.schema';
-import { JoiValidationPipe } from '../../shared/pipes/joi-validation.pipe';
 // import { ValidationPipe } from '../../shared/pipes/validation.pipe';
 import { ParseIntPipe } from '../../shared/pipes/parse-int.pipe';
 
@@ -35,10 +25,20 @@ import { ParseIntPipe } from '../../shared/pipes/parse-int.pipe';
 @Controller('cats')
 @UseFilters(HttpExceptionFilter)
 export class CatsController {
+  private readonly dbHost;
+  private readonly dbUser;
+  private readonly dPass;
+
   constructor(
     private readonly catsService: CatsService,
     private readonly LOG: LoggingService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    // get an environment variable
+    this.dbHost = this.configService.get<string>('database.host', 'localhost');
+    this.dbUser = this.configService.get<string>('database.user');
+    this.dPass = this.configService.get<string>('database.password');
+  }
 
   @Post()
   create(@Body() createCatDto: CreateCatDto) {
@@ -62,6 +62,14 @@ export class CatsController {
 
   @Get(':id')
   findOne(@Param('id') id: number): string {
+    this.LOG.log(
+      'dbHost',
+      this.dbHost,
+      'dbUser',
+      this.dbUser,
+      'dPass',
+      this.dPass,
+    );
     this.LOG.log('findOne', id);
     return `This action returns a #${id} cat`;
   }
