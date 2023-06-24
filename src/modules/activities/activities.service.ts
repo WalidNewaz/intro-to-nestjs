@@ -32,7 +32,11 @@ export class ActivitiesService {
     return createdActivity;
   }
 
-  findAll(): Promise<Activity[]> {
-    return this.activityRepository.find();
+  findAll() {
+    return this.activityRepository.find({
+      relations: {
+        place: true,
+      },
+    });
   }
 }
